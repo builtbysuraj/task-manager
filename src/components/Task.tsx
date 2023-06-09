@@ -1,3 +1,6 @@
+import { Button } from "../styles/Button.style"
+import { TaskWrapper } from "../styles/Task.style"
+
 type Task = {
   id: number
   taskName: string
@@ -5,15 +8,14 @@ type Task = {
 
 type Props = {
   task: Task
-  index: number
   deleteTask: (taskId: number) => void
 }
 
-export default function Task({ task, index, deleteTask }: Props) {
+export default function Task({ task, deleteTask }: Props) {
   return (
-    <div key={index}>
+    <TaskWrapper>
       <span> {task.taskName} </span>
-      <button onClick={() => deleteTask(task.id)}>delete</button>
-    </div>
+      <Button onClick={() => deleteTask(task.id)}>delete</Button>
+    </TaskWrapper>
   )
 }
