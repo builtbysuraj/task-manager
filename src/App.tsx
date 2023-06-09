@@ -1,34 +1,36 @@
-import { useState } from "react"
+import { ChangeEvent, MouseEvent, useState } from "react"
+import Task from "./components/Task"
+
+type Task = {
+  id: number
+  taskName: string
+}
+
+type InputChangeEvent = ChangeEvent<HTMLInputElement>
+type FormEvent = MouseEvent<HTMLButtonElement>
 
 export default function App() {
-  const [tasks, setTasks] = useState<any>([])
-  const [inputValue, setInputValue] = useState<any>()
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [inputValue, setInputValue] = useState<string>("")
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: InputChangeEvent) => {
     setInputValue(e.target.value)
   }
 
-  const addTask = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  // add task function
+  const addTask = (e: FormEvent) => {
     e.preventDefault()
     const newInput = {
       id: tasks.length === 0 ? 1 : tasks[tasks.length - 1].id + 1,
-
       taskName: inputValue,
     }
     let addedTask = inputValue ? [...tasks, newInput] : tasks
     setTasks(addedTask)
   }
 
+  // delete task function
   const deleteTask = (taskId: number) => {
-    let newTask = tasks.filter((task: any) => {
-      if (task.id === taskId) {
-        return false
-      } else {
-        return true
-      }
-    })
-
-    setTasks(newTask)
+    setTasks(tasks.filter((task) => task.id !== taskId))
   }
 
   return (
@@ -39,7 +41,7 @@ export default function App() {
           type="text"
           placeholder="Enter your task"
           spellCheck="false"
-          autoComplete="false"
+          autoComplete="off"
           onChange={(e) => handleInput(e)}
         />
         <button onClick={(e) => addTask(e)} type="submit">
@@ -49,11 +51,13 @@ export default function App() {
 
       {/* display tasks */}
       <section>
-        {tasks.map((ele: any, i: number) => (
-          <div key={i}>
-            <span> {ele.taskName} </span>
-            <button onClick={() => deleteTask(ele.id)}>delete</button>
-          </div>
+        {tasks.map((task, index) => (
+          <Task
+            key={task.id}
+            task={task}
+            index={index}
+            deleteTask={deleteTask}
+          />
         ))}
       </section>
     </main>
