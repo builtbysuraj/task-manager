@@ -1,4 +1,5 @@
 import { styled } from "styled-components"
+import { bgTask } from "./Colors.style"
 
 export const TaskWrapper = styled.section`
   display: flex;
@@ -7,5 +8,5 @@ export const TaskWrapper = styled.section`
   border-radius: 5px;
   padding: 1rem;
   margin: 2rem 0;
-  background-color: #ecedf6;
+  background-color: ${bgTask};
 `

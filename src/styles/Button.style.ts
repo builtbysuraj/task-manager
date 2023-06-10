@@ -1,4 +1,9 @@
 import { styled } from "styled-components"
+import { delBtn, primaryColor } from "./Colors.style"
+
+type ButtonSecondaryProps = {
+  del?: string
+}
 
 export const Button = styled.button`
   padding: 10px 20px;
@@ -6,7 +11,7 @@ export const Button = styled.button`
   cursor: pointer;
   transition: all 0.3s;
   border: none;
-  background-color: #646ff0;
+  background-color: ${primaryColor};
   color: white;
   font-size: 1.6rem;
   &:active {
@@ -14,7 +19,7 @@ export const Button = styled.button`
   }
 `
 
-export const ButtonSecondary = styled.button`
+export const ButtonSecondary = styled.button<ButtonSecondaryProps>`
   padding: 8px 10px;
   margin: 0 1rem;
   border-radius: 5px;
@@ -23,7 +28,7 @@ export const ButtonSecondary = styled.button`
   justify-self: flex-end;
   border: none;
   text-align: right;
-  background-color: #646ff0;
+  background-color: ${(props) => (props.del ? `${delBtn}` : `${primaryColor}`)};
   color: white;
   font-size: 1.4rem;
   &:active {

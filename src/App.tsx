@@ -3,7 +3,7 @@ import { ChangeEvent, MouseEvent, useState } from "react"
 import Task from "./components/Task"
 import { Button } from "./styles/Button.style"
 import { Global } from "./styles/Global.style"
-import { Input } from "./styles/Input.style"
+import { FilterInput, Input } from "./styles/Input.style"
 import { Container, Form, Header } from "./styles/Main.style"
 
 // define type for a task object
@@ -21,6 +21,9 @@ export default function App() {
 
   // state to handle the input change
   const [inputValue, setInputValue] = useState<string>("")
+
+  // state to get the filter input
+  const [filterInput, setFilterInput] = useState<string>("")
 
   const handleInput = (e: InputChangeEvent) => {
     setInputValue(e.target.value)
@@ -55,6 +58,11 @@ export default function App() {
     )
   }
 
+  // filter the task array based on the filterInput
+  const filteredTask: Task[] = tasks.filter((task) =>
+    task.taskName.toLowerCase().includes(filterInput.toLocaleLowerCase())
+  )
+
   return (
     <Container>
       <Global />
@@ -69,16 +77,24 @@ export default function App() {
           autoComplete="off"
           onChange={(e) => handleInput(e)}
           value={inputValue}
-          autoFocus
         />
+
         <Button onClick={(e) => addTask(e)} type="submit">
           Add
         </Button>
+
+        <FilterInput
+          type="text"
+          placeholder="Filter"
+          spellCheck="false"
+          autoComplete="off"
+          onChange={(e) => setFilterInput(e.target.value)}
+        />
       </Form>
 
       {/* display tasks */}
       <section>
-        {tasks.map((task) => (
+        {filteredTask.map((task) => (
           <Task
             key={task.id}
             task={task}

@@ -9,6 +9,7 @@ type Task = {
   taskName: string
 }
 
+// define type of props
 type Props = {
   task: Task
   deleteTask: (taskId: number) => void
@@ -19,10 +20,12 @@ export default function Task({ task, deleteTask, updateTask }: Props) {
   const [isEditing, setIsEditing] = useState<boolean>(false)
   const [newTaskName, setNewTaskName] = useState<string>(task.taskName)
 
+  // change state on click of edit button
   const handleEdit = () => {
     setIsEditing(true)
   }
 
+  // update the task on click of save button
   const handleSave = () => {
     updateTask(task.id, newTaskName)
     setIsEditing(false)
@@ -43,7 +46,7 @@ export default function Task({ task, deleteTask, updateTask }: Props) {
         <span> {task.taskName} </span>
       )}
       <ButtonWrapper>
-        <ButtonSecondary onClick={() => deleteTask(task.id)}>
+        <ButtonSecondary del="true" onClick={() => deleteTask(task.id)}>
           delete
         </ButtonSecondary>
 

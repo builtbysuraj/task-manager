@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components"
+import { bgColor } from "./Colors.style"
 
 export const Global = createGlobalStyle`
   *{
@@ -12,7 +13,7 @@ export const Global = createGlobalStyle`
  }
  body{
   font-size: 1.6rem;
-  background-color: #F8F8FF;
+  background-color: ${bgColor};
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
  }
