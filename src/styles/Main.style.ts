@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { headerColor } from "./Colors.style"
+import { headerColor, primaryColor } from "./Colors.style"
 
 export const Container = styled.div`
   display: grid;
@@ -46,4 +46,14 @@ export const LoaderStyle = styled.div`
   align-items: center;
   justify-content: center;
   height: 80vh;
+`
+
+export const LoginStyle = styled.div`
+  display: grid;
+  place-content: center;
+  margin: 1rem;
+  gap: 2rem;
+  h1 {
+    color: ${headerColor};
+  }
 `

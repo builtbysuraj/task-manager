@@ -74,53 +74,55 @@ export default function App() {
 
   return (
     <>
-      {isAuthenticated ? (
-        <Container>
-          <Global />
-          <Header>Task Manager</Header>
-          <UserSection>
-            <UserDetails />
-            <Logout />
-          </UserSection>
-          {/* take input using form */}
-          <Form>
-            <Input
-              type="text"
-              placeholder="Enter your task"
-              spellCheck="false"
-              autoComplete="off"
-              onChange={(e) => handleInput(e)}
-              value={inputValue}
-            />
-
-            <Button onClick={(e) => addTask(e)} type="submit">
-              Add
-            </Button>
-
-            <FilterInput
-              type="text"
-              placeholder="Filter"
-              spellCheck="false"
-              autoComplete="off"
-              onChange={(e) => setFilterInput(e.target.value)}
-            />
-          </Form>
-
-          {/* display tasks */}
-          <section>
-            {filteredTask.map((task) => (
-              <Task
-                key={task.id}
-                task={task}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
+      <Container>
+        <Global />
+        {isAuthenticated ? (
+          <>
+            <Header>Task Manager</Header>
+            <UserSection>
+              <UserDetails />
+              <Logout />
+            </UserSection>
+            {/* take input using form */}
+            <Form>
+              <Input
+                type="text"
+                placeholder="Enter your task"
+                spellCheck="false"
+                autoComplete="off"
+                onChange={(e) => handleInput(e)}
+                value={inputValue}
               />
-            ))}
-          </section>
-        </Container>
-      ) : (
-        <Login />
-      )}
+
+              <Button onClick={(e) => addTask(e)} type="submit">
+                Add
+              </Button>
+
+              <FilterInput
+                type="text"
+                placeholder="Filter"
+                spellCheck="false"
+                autoComplete="off"
+                onChange={(e) => setFilterInput(e.target.value)}
+              />
+            </Form>
+
+            {/* display tasks */}
+            <section>
+              {filteredTask.map((task) => (
+                <Task
+                  key={task.id}
+                  task={task}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                />
+              ))}
+            </section>
+          </>
+        ) : (
+          <Login />
+        )}
+      </Container>
     </>
   )
 }
