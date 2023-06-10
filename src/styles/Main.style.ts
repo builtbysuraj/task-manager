@@ -21,3 +21,29 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 2rem;
 `
+
+export const UserSection = styled.section`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1rem;
+`
+
+export const UserDetailsStyle = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  img {
+    width: 80px;
+    border-radius: 50%;
+  }
+`
+
+export const LoaderStyle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`

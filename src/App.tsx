@@ -1,10 +1,15 @@
+import { useAuth0 } from "@auth0/auth0-react"
 import { ChangeEvent, MouseEvent, useState } from "react"
 
+import Loader from "./components/Loader"
+import Login from "./components/Login"
+import Logout from "./components/Logout"
 import Task from "./components/Task"
+import UserDetails from "./components/UserDetails"
 import { Button } from "./styles/Button.style"
 import { Global } from "./styles/Global.style"
 import { FilterInput, Input } from "./styles/Input.style"
-import { Container, Form, Header } from "./styles/Main.style"
+import { Container, Form, Header, UserSection } from "./styles/Main.style"
 
 // define type for a task object
 type Task = {
@@ -16,6 +21,8 @@ type InputChangeEvent = ChangeEvent<HTMLInputElement>
 type FormEvent = MouseEvent<HTMLButtonElement>
 
 export default function App() {
+  const { isAuthenticated, isLoading } = useAuth0()
+
   // state to store each object of task inside array
   const [tasks, setTasks] = useState<Task[]>([])
 
@@ -63,46 +70,57 @@ export default function App() {
     task.taskName.toLowerCase().includes(filterInput.toLocaleLowerCase())
   )
 
+  if (isLoading) return <Loader />
+
   return (
-    <Container>
-      <Global />
-      <Header>Task Manager</Header>
+    <>
+      {isAuthenticated ? (
+        <Container>
+          <Global />
+          <Header>Task Manager</Header>
+          <UserSection>
+            <UserDetails />
+            <Logout />
+          </UserSection>
+          {/* take input using form */}
+          <Form>
+            <Input
+              type="text"
+              placeholder="Enter your task"
+              spellCheck="false"
+              autoComplete="off"
+              onChange={(e) => handleInput(e)}
+              value={inputValue}
+            />
 
-      {/* take input using form */}
-      <Form>
-        <Input
-          type="text"
-          placeholder="Enter your task"
-          spellCheck="false"
-          autoComplete="off"
-          onChange={(e) => handleInput(e)}
-          value={inputValue}
-        />
+            <Button onClick={(e) => addTask(e)} type="submit">
+              Add
+            </Button>
 
-        <Button onClick={(e) => addTask(e)} type="submit">
-          Add
-        </Button>
+            <FilterInput
+              type="text"
+              placeholder="Filter"
+              spellCheck="false"
+              autoComplete="off"
+              onChange={(e) => setFilterInput(e.target.value)}
+            />
+          </Form>
 
-        <FilterInput
-          type="text"
-          placeholder="Filter"
-          spellCheck="false"
-          autoComplete="off"
-          onChange={(e) => setFilterInput(e.target.value)}
-        />
-      </Form>
-
-      {/* display tasks */}
-      <section>
-        {filteredTask.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            deleteTask={deleteTask}
-            updateTask={updateTask}
-          />
-        ))}
-      </section>
-    </Container>
+          {/* display tasks */}
+          <section>
+            {filteredTask.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+              />
+            ))}
+          </section>
+        </Container>
+      ) : (
+        <Login />
+      )}
+    </>
   )
 }
