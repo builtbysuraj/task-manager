@@ -46,6 +46,15 @@ export default function App() {
     setTasks(tasks.filter((task) => task.id !== taskId))
   }
 
+  // Update task
+  const updateTask = (taskId: number, newTaskName: string) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, taskName: newTaskName } : task
+      )
+    )
+  }
+
   return (
     <Container>
       <Global />
@@ -60,6 +69,7 @@ export default function App() {
           autoComplete="off"
           onChange={(e) => handleInput(e)}
           value={inputValue}
+          autoFocus
         />
         <Button onClick={(e) => addTask(e)} type="submit">
           Add
@@ -69,7 +79,12 @@ export default function App() {
       {/* display tasks */}
       <section>
         {tasks.map((task) => (
-          <Task key={task.id} task={task} deleteTask={deleteTask} />
+          <Task
+            key={task.id}
+            task={task}
+            deleteTask={deleteTask}
+            updateTask={updateTask}
+          />
         ))}
       </section>
     </Container>

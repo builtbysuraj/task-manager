@@ -4,8 +4,6 @@ export const Container = styled.div`
   display: grid;
   place-content: center;
   margin-top: 3rem;
-  /* max-width: 48rem; */
-  /* margin: auto; */
 `
 
 export const Header = styled.h1`
